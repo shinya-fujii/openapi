@@ -1,0 +1,45 @@
+openapi: 3.1.1
+info:
+  title: Manage Docs
+  description: |-
+    社内向けドキュメント管理システムのAPIの仕様
+  version: 1.0.0
+servers:
+  - url: http://localhost/api/v1
+paths:
+    /organizations/{organization_id}/articles:
+      get:
+        summary: 記事一覧取得
+        tags:
+          - Articles
+        parameters:
+          - name: organization_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ArticleOverview'
+          '404':
+            description: Organization not found
+          '403':
+            description: Forbidden
+components:
+  schemas:
+    ArticleOverview:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 記事のID
+
+  
