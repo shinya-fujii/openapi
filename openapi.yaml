@@ -36,7 +36,42 @@ paths:
           '401':
             description: Unauthorized
           '404':
-            description: Organization not found
+            description: Not found
+          '403':
+            description: Forbidden
+          '500':
+            description: Internal Server Error
+    /organizations/{organization_id}/articles/{article_id}:
+      get:
+        summary: 記事詳細取得
+        tags:
+          - Articles
+        security:
+          - BearerAuth: []
+        parameters:
+          - name: organization_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+          - name: article_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ArticleDetail'
+          '401':
+            description: Unauthorized
+          '404':
+            description: Not found
           '403':
             description: Forbidden
           '500':
@@ -78,6 +113,46 @@ components:
           format: date-time
           description: 記事の登録日時
           example: "2023-10-01T12:34:56Z"
+    ArticleDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 記事のID
+          example: "aa687d47-b976-4a9a-87cc-19ec205c3ff9"
+        title:
+          type: string
+          description: 記事のタイトル
+          example: "タイトル"
+        content:
+          type: string
+          description: 記事の内容（Markdown形式）
+          example: "# 見出し\n\n本文..."
+        owner_id:
+          type: string
+          format: uuid
+          description: 記事の投稿者のID
+          example: "32faad36-7439-436e-bf93-9ea412e6b131"
+        owner_name:
+          type: string
+          description: 記事の投稿者の名前
+          example: "山田 太郎"
+        owner_icon_url:
+          type: string
+          format: uri
+          description: 記事の投稿者のアイコン画像URL
+          example: "https://example.com/avatar.png"
+        registered_timestamp:
+          type: string
+          format: date-time
+          description: 記事の登録日時
+          example: "2023-10-01T12:34:56Z"
+        last_updated_timestamp:
+          type: string
+          format: date-time
+          description: 記事の最終更新日時
+          example: "2023-10-02T14:20:00Z"
   securitySchemes:
     BearerAuth:
       type: http
