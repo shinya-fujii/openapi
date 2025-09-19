@@ -51,6 +51,33 @@ components:
           format: uuid
           description: 記事のID
           example: "aa687d47-b976-4a9a-87cc-19ec205c3ff9"
+        title:
+          type: string
+          description: 記事のタイトル
+          example: "タイトル"
+        summary:
+          type: string
+          description: 記事の概要
+          example: "概要"
+        owner_id:
+          type: string
+          format: uuid
+          description: 記事の投稿者のID
+          example: "32faad36-7439-436e-bf93-9ea412e6b131"
+        owner_name:
+          type: string
+          description: 記事の投稿者の名前
+          example: "山田 太郎"
+        owner_icon_url:
+          type: string
+          format: uri
+          description: 記事の投稿者のアイコン画像URL
+          example: "https://example.com/avatar.png"
+        registered_timestamp:
+          type: string
+          format: date-time
+          description: 記事の登録日時
+          example: "2023-10-01T12:34:56Z"
   securitySchemes:
     BearerAuth:
       type: http
