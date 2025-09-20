@@ -41,6 +41,54 @@ paths:
             description: Forbidden
           '500':
             description: Internal Server Error
+      post:
+        summary: 記事作成
+        tags:
+          - Articles
+        security:
+          - BearerAuth: []
+        parameters:
+          - name: organization_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostArticleRequest'
+        responses:
+          '201':
+            description: Created
+            headers:
+              Location:
+                schema:
+                  type: string
+                  format: uri
+                description: 作成された記事のURL
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: 登録された記事のID
+                      example: "aa687d47-b976-4a9a-87cc-19ec205c3ff9"
+          '400':
+            description: Bad Request
+          '401':
+            description: Unauthorized
+          '404':
+            description: Not found
+          '403':
+            description: Forbidden
+          '500':
+            description: Internal Server Error
     /articles/{article_id}:
       get:
         summary: 記事詳細取得
@@ -128,6 +176,17 @@ paths:
             description: Internal Server Error
 components:
   schemas:
+    PostArticleRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: 記事のタイトル
+          example: "タイトル"
+        content:
+          type: string
+          description: 記事の内容（Markdown形式）
+          example: "# 見出し\n\n新しい本文..."
     GetArticleOverviewResponse:
       type: object
       properties:
