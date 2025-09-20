@@ -32,7 +32,7 @@ paths:
                     articles:
                       type: array
                       items:
-                        $ref: '#/components/schemas/ArticleOverview'
+                        $ref: '#/components/schemas/GetArticleOverviewResponse'
           '401':
             description: Unauthorized
           '404':
@@ -41,7 +41,7 @@ paths:
             description: Forbidden
           '500':
             description: Internal Server Error
-    /organizations/{organization_id}/articles/{article_id}:
+    /articles/{article_id}:
       get:
         summary: 記事詳細取得
         tags:
@@ -49,12 +49,6 @@ paths:
         security:
           - BearerAuth: []
         parameters:
-          - name: organization_id
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
           - name: article_id
             in: path
             required: true
@@ -67,7 +61,42 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/ArticleDetail'
+                  $ref: '#/components/schemas/GetArticleDetailResponse'
+          '401':
+            description: Unauthorized
+          '404':
+            description: Not found
+          '403':
+            description: Forbidden
+          '500':
+            description: Internal Server Error
+      put:
+        summary: 記事更新
+        tags:
+          - Articles
+        security:
+          - BearerAuth: []
+        parameters:
+          - name: article_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    $ref: '#/components/schemas/PutArticleRequest'
+        responses:
+          '204':
+            description: No Content
+          '400':
+            description: Bad Request
           '401':
             description: Unauthorized
           '404':
@@ -78,7 +107,7 @@ paths:
             description: Internal Server Error
 components:
   schemas:
-    ArticleOverview:
+    GetArticleOverviewResponse:
       type: object
       properties:
         id:
@@ -113,7 +142,7 @@ components:
           format: date-time
           description: 記事の登録日時
           example: "2023-10-01T12:34:56Z"
-    ArticleDetail:
+    GetArticleDetailResponse:
       type: object
       properties:
         id:
@@ -153,6 +182,17 @@ components:
           format: date-time
           description: 記事の最終更新日時
           example: "2023-10-02T14:20:00Z"
+    PutArticleRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: 記事のタイトル
+          example: "新しいタイトル"
+        content:
+          type: string
+          description: 記事の内容（Markdown形式）
+          example: "# 新しい見出し\n\n新しい本文..."
   securitySchemes:
     BearerAuth:
       type: http
