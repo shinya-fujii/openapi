@@ -88,15 +88,36 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  items:
-                    $ref: '#/components/schemas/PutArticleRequest'
+                $ref: '#/components/schemas/PutArticleRequest'
         responses:
           '204':
             description: No Content
           '400':
             description: Bad Request
+          '401':
+            description: Unauthorized
+          '404':
+            description: Not found
+          '403':
+            description: Forbidden
+          '500':
+            description: Internal Server Error
+      delete:
+        summary: 記事削除
+        tags:
+          - Articles
+        security:
+          - BearerAuth: []
+        parameters:
+          - name: article_id
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        responses:
+          '204':
+            description: No Content
           '401':
             description: Unauthorized
           '404':
