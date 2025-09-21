@@ -176,7 +176,7 @@ paths:
             description: Internal Server Error
     /articles/{article_id}/visibility:
       put:
-        summary: 記事公開状態変更
+        summary: 記事公開状態更新
         tags:
           - Articles
         security:
