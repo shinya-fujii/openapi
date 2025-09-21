@@ -48,14 +48,28 @@ create table article_owner(
     foreign key (organization_id) references organization(organization_id) on delete cascade
 );
 
-create table update_article(
+create table article_publish_status(
     article_id char(36) primary key,
-    updated_at timestamp not null,
+    current_status text not null,
+    foreign key (article_id) references article(article_id) on delete cascade
+);
+
+create table article_publish_activity(
+    article_publish_activity_id char(36) primary key,
+    article_id char(36) not null,
+    status text not null,
+    activity_at timestamp not null,
     foreign key (article_id) references article(article_id) on delete cascade
 );
 
 create table post_article(
     article_id char(36) primary key,
     registered_at timestamp not null,
+    foreign key (article_id) references article(article_id) on delete cascade
+);
+
+create table update_article(
+    article_id char(36) primary key,
+    updated_at timestamp not null,
     foreign key (article_id) references article(article_id) on delete cascade
 );
