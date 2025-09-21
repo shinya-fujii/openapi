@@ -21,6 +21,16 @@ paths:
             schema:
               type: string
               format: uuid
+          - name: registered_at_order
+            in: query
+            required: false
+            schema:
+              type: string
+              enum:
+                - asc
+                - desc
+              default: desc
+            description: 登録日時の並び順
         responses:
           '200':
             description: OK
