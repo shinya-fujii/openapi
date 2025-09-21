@@ -31,6 +31,20 @@ paths:
                 - desc
               default: desc
             description: 登録日時の並び順
+          - name: limit
+            in: query
+            required: true
+            schema:
+              type: integer
+              default: 20
+            description: 取得件数の上限
+          - name: offset
+            in: query
+            required: true
+            schema:
+              type: integer
+              default: 0
+            description: 取得開始位置
         responses:
           '200':
             description: OK
@@ -229,7 +243,7 @@ components:
         content:
           type: string
           description: 記事の内容（Markdown形式）
-          example: "# 見出し\n\n新しい本文..."
+          example: "# 見出し\n\n本文..."
     GetArticleOverviewResponse:
       type: object
       properties:
