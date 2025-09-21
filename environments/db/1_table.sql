@@ -38,7 +38,7 @@ create table article(
     content text not null
 );
 
-create table article_owner(
+create table article_author(
     article_id char(36) not null,
     user_id char(36) not null,
     organization_id char(36) not null,
